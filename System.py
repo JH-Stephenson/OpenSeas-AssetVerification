@@ -2,8 +2,8 @@
 
 #SystemImports
 from asyncio import sleep
-import requests
 import json
+import requests
 import time
 
 #AssetTable
@@ -17,7 +17,7 @@ OpenSeas_EndURL = "/owners?format=json&limit=20&order_by=created_date&order_dire
 
 #UserInput
 User_Wallet = ""
-1
+
 #Functions
 def FindAssetOwners():
     #FunctionVariables
@@ -27,11 +27,16 @@ def FindAssetOwners():
     while JSON_Key != ("null"):
         for Contract_ID in Asset_Contract_IDs:
             URL_Address = (OpenSeas_StartURL + Asset_Contract_Address[0] + "/" + Contract_ID + OpenSeas_EndURL)
-            URL_Response = requests.get(URL_Address)
+            URL_Response = requests.get(URL_Address, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
 
-            print(URL_Response)
+            JSON_Response = URL_Response.text
+            JSON_LoadedData = json.loads(JSON_Response)
+            
+            print(JSON_LoadedData)
 
             System_Counter = System_Counter + 1
+
+            time.sleep(1)
 
 def GetUserWallet():
     User_Wallet = input(str("Input Your Public Wallet Address: "))
