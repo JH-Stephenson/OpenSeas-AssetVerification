@@ -13,17 +13,25 @@ Asset_Contract_IDs = ["823443598152981198005425648393499046278946447168451834547
 
 #PreSetRequest
 OpenSeas_StartURL = "https://api.opensea.io/api/v1/asset/"
-OpenSeas_EndURL = "/owners?limit=20&order_by=created_date&order_direction=desc"
+OpenSeas_EndURL = "/owners?format=json&limit=20&order_by=created_date&order_direction=desc"
 
 #UserInput
 User_Wallet = ""
-
+1
 #Functions
 def FindAssetOwners():
     #FunctionVariables
     System_Counter = 0
     JSON_Key = ""
-    
+
+    while JSON_Key != ("null"):
+        for Contract_ID in Asset_Contract_IDs:
+            URL_Address = (OpenSeas_StartURL + Asset_Contract_Address[0] + "/" + Contract_ID + OpenSeas_EndURL)
+            URL_Response = requests.get(URL_Address)
+
+            print(URL_Response)
+
+            System_Counter = System_Counter + 1
 
 def GetUserWallet():
     User_Wallet = input(str("Input Your Public Wallet Address: "))
